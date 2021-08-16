@@ -9,7 +9,7 @@ Credit to Robert Haase (MPI CBG Dresden) for code
 
 from idr import connection
 import numpy
-from skimage.io import imshow, imsave
+from skimage.io import imsave
 
 conn = connection('idr.openmicroscopy.org')
 
@@ -75,8 +75,7 @@ def retrieve_image(conn, dataset_id, image_id, timestart, timestop, channels, sl
 dataset_id = 3351
 image_id = 4007801
 
-input_data = retrieve_image(conn, dataset_id, image_id, 140, 145, 1, 400, 441, 8)
+input_data = retrieve_image(conn, dataset_id, image_id, 140, 160, 1, 400, 441, 8)
 
 print(input_data.shape)
-#imshow(input_data[0,0,:,:,0])
 imsave('test.tif', input_data)
