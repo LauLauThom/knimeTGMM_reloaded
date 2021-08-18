@@ -27,7 +27,13 @@ This workflow includes the different functions:
 - Tracking of cells: Takes `.bin` files, outputs tracking data in `.xml` files.
 - Display of tracking: Takes `.xml` files, allows visualization of centroids superposed on the original images, with consistent lineage labels.
 
-### MaMut import
+## Requirements
+
+This workflow is only compatible with TGMM for Windows. TGMM requires a CUDA compatible GPU to function. It was tested to work on Knime 4.4.0.
+
+The Knime extensions for Image Processing and External Tool compatiblity will be installed automatically by Knime upon opening the workflow.
+
+## MaMut import
 
 To import results in MaMut, all images need to be integrated into a hyperstack with the correct number of slices and frames in FIJI.
 
