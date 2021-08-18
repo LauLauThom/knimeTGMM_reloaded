@@ -12,8 +12,6 @@ Timeframes have to be saved in separate `.tif` files, the filename of which shou
 
 During configuration, you will be asked to provide the location of the files with the timepoint replaced by "?" and no extension (example: `frame0001.tif` -> frame????).
 
-Only filenames which do not include a period in the middle can be processed by the workflow (use `experimental_data0001.tif` rather than `experimental.data0001.tif`)
-
 ## Processing steps
 
 This workflow includes the different functions:
