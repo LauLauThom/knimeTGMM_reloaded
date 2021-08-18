@@ -4,6 +4,12 @@ Knime workflow to automate use of TGMM software for cell segmentation and lineag
 
 Results can be viewed either in Knime or displayed better using MaMut plugin on FIJI.
 
+The original TGMM repository contains the necessary software to run this workflow and an example dataset under `data>data`. You can find it at: https://git.rcc.uchicago.edu/open-source/TGMM .
+
+The IDRdownloader python script in this repository can allow you to download additional datasets from the Image Data Resource database (https://idr.openmicroscopy.org/).
+
+It is currently set to download an appropriate dataset from the Keller lab (source of the TGMM software) (https://idr.openmicroscopy.org/webclient/img_detail/4007801/?dataset=3351).
+
 ## Expected datasets
 
 We recommend to use 3D datasets of at least 10 frames. Errors were observed using shorter datasets.
