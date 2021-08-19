@@ -14,7 +14,7 @@ This KNIME workflow is only compatible with TGMM for Windows, and was tested wit
 The Knime extensions (Image Processing and External Tools) needed by the workflow will be installed automatically by Knime upon opening the workflow.
 
 
-The original TGMM repository contains the necessary software to run this workflow (TGMM 1.0) and an example dataset under `data>data`.  
+The original TGMM repository contains the necessary software to run this workflow (TGMM 1.0) as well as some documentation/user-guide and an example dataset under `data>data`.  
 You can find it at: https://sourceforge.net/projects/tgmm/files/.  
 TGMM 1.0 is also available at https://git.rcc.uchicago.edu/open-source/TGMM but this version was returning CUDA errors with out configuration.  
 TGMM 2.0 is also available but not compiled. 
