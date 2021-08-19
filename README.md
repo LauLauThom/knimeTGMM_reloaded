@@ -40,15 +40,20 @@ One should use the pattern
 This workflow includes the different functions:
 
 - __Hierarchical segmentation of 3D images into supervoxels  (Watershed + Persistence Based Clustering - PCB)__  
-Takes Z-stack for each timepoints (tif) as inputs, and outputs the hierarchical segmentations as `.bin` files.    
-These bin files contain a hierarchy of possible segmentations for different Tau level.  
-By selecting a Tau and background value, the hierarchical segmentation is "cut" to a given level, yielding a first set of supervoxel (next workflow).
+The workflow is internally calling *ProcessStackBatchMultiCore.exe <TGMMconfig.txt> \<firstTime> \<lastTime>*.   
+The config file is automatically generated from the parameters provided in the GUI of the component node (advanced parameters can be modified by entering the component node).  
+This command takes Z-stack for each timepoints (tif) as inputs, and outputs the hierarchical segmentations as `.bin` files.    
+These bin files can be used to derive different segmentations, by choosing a cut-off (Tau), ie to a Tau value corresponds one segmentation level.     
+By selecting a Tau and background value, the hierarchical segmentation is "cut" to a given level, yielding a first set of supervoxel (next workflow).  
 
-- __Visualization of the segmentation for a given Tau/Background__  
-Takes `.bin` files, outputs segmentation mask as `.tif` files.   
-The mask are then loaded in Knime and can be viewed overlaid on the original images.  
+- __Visualization of the segmentation for a given Tau__  
+This is calling *ProcessStack.exe \<binFile> \<Tau> \<minSuperVoxelSize>*.  
+From the `.bin` files, outputs segmentation mask as `.tif` files.   
+The mask are then loaded in Knime and can be viewed overlaid on the original images.   
+From the original publication "The higher the value of Tau, the coarser the segmentation, as more image regions are merged."  
 
 - __Tracking of cells__  
+This is calling *TGMM.exe <TGMMconfig.txt> \<firstTime> \<lastTime>*.  
 Takes `.bin` files, outputs tracking data as `.xml` files.  
 The XML contains the coordinates of the Gaussian which were fitted on the nuclei, from the supervoxel segmentation.    
 The XML files can be loaded in Fiji using MaMut to view the nuclei rendered from the gaussian fits and their tracks.  
