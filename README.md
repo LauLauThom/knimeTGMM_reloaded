@@ -39,10 +39,23 @@ One should use the pattern
 
 This workflow includes the different functions:
 
-- Hierarchical segmentation of 3D images: Takes 3D tif images as input, outputs data in `.bin` files.
-- Display of segmentation: Takes `.bin` files, outputs `.tif` files and allows visuaization in Knime by superposition on the original images.
-- Tracking of cells: Takes `.bin` files, outputs tracking data in `.xml` files.
-- Display of tracking: Takes `.xml` files, allows visualization of centroids superposed on the original images, with consistent lineage labels.
+- __Hierarchical segmentation of 3D images into supervoxels  (Watershed + Persistence Based Clustering - PCB)__  
+Takes Z-stack for each timepoints (tif) as inputs, and outputs the hierarchical segmentations as `.bin` files.    
+These bin files contain a hierarchy of possible segmentations for different Tau level.  
+By selecting a Tau and background value, the hierarchical segmentation is "cut" to a given level, yielding a first set of supervoxel (next workflow).
+
+- __Visualization of the segmentation for a given Tau/Background__  
+Takes `.bin` files, outputs segmentation mask as `.tif` files.   
+The mask are then loaded in Knime and can be viewed overlaid on the original images.  
+
+- __Tracking of cells__  
+Takes `.bin` files, outputs tracking data as `.xml` files.  
+The XML contains the coordinates of the Gaussian which were fitted on the nuclei, from the supervoxel segmentation.    
+The XML files can be loaded in Fiji using MaMut to view the nuclei rendered from the gaussian fits and their tracks.  
+
+- __Display of localized nuclei__  
+Takes `.xml` files, allows visualization of centroids overlaid on the original images.  
+The color of the centroid labeling is determined by the index of the cell lineage (ie cells from the same lineage have the same labeling color).  
 
 
 ## MaMut import
