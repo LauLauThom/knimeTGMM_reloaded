@@ -1,6 +1,6 @@
-# knimeTGMM_reloaded
+# TGMM in KNIME
 
-Knime workflow to automate the use of the software Tracking by Gaussian Mixture Model (TGMM, Amat et al.) for 3D cell segmentation and cell-lineage tracking in 3D+time image-sequences.  
+Knime workflow to automate the use of the software Tracking by Gaussian Mixture Models (TGMM, Amat et al.) for 3D cell segmentation and cell-lineage tracking in 3D+time image-sequences.  
 TGMM was designed to work with dataset of cells with fluorescently labelled nuclei (ex: H2B-mCherry in developping drosophila embryos). 
 
 Results can be viewed either in Knime or displayed better using MaMut plugin in FIJI.
