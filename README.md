@@ -38,25 +38,44 @@ One should use the pattern
 
 This workflow includes the different functions:
 
-### __Hierarchical segmentation of 3D images into supervoxels  (Watershed + Persistence Based Clustering - PCB)__   
-The workflow is internally calling `ProcessStackBatchMultiCore.exe <TGMMconfig.txt> <firstTime> <lastTime>`.   
-The config file is automatically generated from the parameters provided in the GUI of the component node (advanced parameters can be modified by entering the component node).  
+### __Hierarchical segmentation of 3D images into supervoxels__  
+This is performed by the node "Pyramidal Segmentation Hierarchy".  
+
+This first step includes:
+ - reducing noise in images using median filter (use CUDA)
+ - identification of foreground regions using the "background threshold" parameter
+ - watershed
+ - Persistence Based Clustering (PCB), creating the hierarchy of segmentation levels
+
+The node is internally calling `ProcessStackBatchMultiCore.exe <TGMMconfig.txt> <firstTimepoint> <lastTimepoint>`.   
+The config file is automatically generated from the parameters provided in the GUI of the node (refer to the mouse-over description of the GUI elements and/or to the TGMM user-guide for a more detailed description of the parameters).    
 This command actually parallelizes `ProcessStack.exe <TGMMconfig.txt> <image>` called with individual Z-stacks of timepoints (the `<image>`), and using as many CPU cores as available (ie timepoints are processed in parallel).   
 
 The output is a hierarchical segmentations for each timepoint, saved as `.bin` files in the image directory.      
 These bin files can be used to derive different segmentations, by choosing a cut-off (Tau), ie to a Tau value corresponds one segmentation level.     
-By selecting a Tau and background value, the hierarchical segmentation is "cut" to a given level, yielding a first set of supervoxel (next workflow).  
+By selecting a Tau, the hierarchical segmentation is "cut" to a given level, yielding a first set of supervoxel (next workflow).  
+
+Note: ProcessStack can also be called to generate such bin file for single timepoints Z-stacks by calling  
+`ProcessStack.exe <image> <radiusMedianFilter> <minTau> <backgroundThr> <conn3D>`
 
 ### __Visualization of the segmentation for a given Tau__  
-This is calling *ProcessStack.exe \<binFile> \<Tau> \<minSuperVoxelSize>*.  
-From the `.bin` files, outputs segmentation mask as `.tif` files.   
-The mask are then loaded in Knime and can be viewed overlaid on the original images.   
+This is calling `ProcessStack.exe <binFile> <Tau> <minSuperVoxelSize>`.  
+This allows to visualize the resulting segmentation for a given Tau and minimum nuclei size (also called supervoxel size).  
+It takes the `.bin` files generated at the previous step, and outputs segmentation mask as `.tif` files in the image directory.     
+The masks are then loaded in Knime and can be viewed overlaid on the original images.   
 From the original publication "The higher the value of Tau, the coarser the segmentation, as more image regions are merged."  
 
 ### __Tracking of cells__  
-This is calling *TGMM.exe <TGMMconfig.txt> \<firstTime> \<lastTime>*.  
-Takes `.bin` files, outputs tracking data as `.xml` files.  
-The XML contains the coordinates of the Gaussian which were fitted on the nuclei, from the supervoxel segmentation.    
+This is calling `TGMM.exe <TGMMconfig.txt> <firstTime> <lastTime>`.  
+It performs the following steps:
+- from the `.bin` files containing the hierarchical segmentation, derive a segmentation corresponding to the selected Tau
+- remove supervoxels below `minNucleiSize` 
+- apply Otsu thresholding followed by filtering with `maxNucleiSize` 
+- Fit gaussians on the supervoxels/nuclei (the Gaussian Mixture Model)
+- Establish cell tracks and lineage based on the gaussian fit
+
+The output is a set of XML file (one per timepoint).  
+The XML contains the coordinates of the gaussian fitted on the nuclei, as well as track/lineage information.  
 The XML files can be loaded in Fiji using MaMut to view the nuclei rendered from the gaussian fits and their tracks.  
 
 ### __Display of localized nuclei__  
