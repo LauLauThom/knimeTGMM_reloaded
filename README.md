@@ -8,11 +8,10 @@ Results can be viewed either in Knime or displayed better using MaMut plugin in 
 The IDRdownloader python script in this repository can allow you to download additional datasets from the Image Data Resource database (https://idr.openmicroscopy.org/).  
 It is currently set to download an appropriate dataset from the Keller lab (source of the TGMM software) (https://idr.openmicroscopy.org/webclient/img_detail/4007801/?dataset=3351).
 
-## Requirements  
+# Requirements  
 TGMM requires a GPU with CUDA support.  
 This KNIME workflow is only compatible with TGMM for Windows, and was tested with Knime 4.4.0.  
 The Knime extensions (Image Processing and External Tools) needed by the workflow will be installed automatically by Knime upon opening the workflow.
-
 
 The original TGMM repository contains the necessary software to run this workflow (TGMM 1.0) as well as some documentation/user-guide and an example dataset under `data>data`.  
 You can find it at: https://sourceforge.net/projects/tgmm/files/.  
@@ -21,7 +20,7 @@ TGMM 2.0 is also available but not compiled.
 There is also some documentation in the doc directory of this repo https://bitbucket.org/fernandoamat/tgmm-paper/src/master/.  
 
 
-## Expected datasets
+# Expected datasets
 
 We recommend to use 3D datasets of at least 10 frames. Errors were observed using shorter datasets.  
 Z-stack for each timepoints have to be saved in separate `.tif` files.  
@@ -35,30 +34,32 @@ myPath/frame0002.tif
 One should use the pattern
 `myPath/frame????` with 4 `?` since all frames have a timepoint encoded as a 4-digit value.  
 
-## Processing steps
+# Processing steps
 
 This workflow includes the different functions:
 
-- __Hierarchical segmentation of 3D images into supervoxels  (Watershed + Persistence Based Clustering - PCB)__  
-The workflow is internally calling *ProcessStackBatchMultiCore.exe <TGMMconfig.txt> \<firstTime> \<lastTime>*.   
+### __Hierarchical segmentation of 3D images into supervoxels  (Watershed + Persistence Based Clustering - PCB)__   
+The workflow is internally calling `ProcessStackBatchMultiCore.exe <TGMMconfig.txt> <firstTime> <lastTime>`.   
 The config file is automatically generated from the parameters provided in the GUI of the component node (advanced parameters can be modified by entering the component node).  
-This command takes Z-stack for each timepoints (tif) as inputs, and outputs the hierarchical segmentations as `.bin` files.    
+This command actually parallelizes `ProcessStack.exe <TGMMconfig.txt> <image>` called with individual Z-stacks of timepoints (the `<image>`), and using as many CPU cores as available (ie timepoints are processed in parallel).   
+
+The output is a hierarchical segmentations for each timepoint, saved as `.bin` files in the image directory.      
 These bin files can be used to derive different segmentations, by choosing a cut-off (Tau), ie to a Tau value corresponds one segmentation level.     
 By selecting a Tau and background value, the hierarchical segmentation is "cut" to a given level, yielding a first set of supervoxel (next workflow).  
 
-- __Visualization of the segmentation for a given Tau__  
+### __Visualization of the segmentation for a given Tau__  
 This is calling *ProcessStack.exe \<binFile> \<Tau> \<minSuperVoxelSize>*.  
 From the `.bin` files, outputs segmentation mask as `.tif` files.   
 The mask are then loaded in Knime and can be viewed overlaid on the original images.   
 From the original publication "The higher the value of Tau, the coarser the segmentation, as more image regions are merged."  
 
-- __Tracking of cells__  
+### __Tracking of cells__  
 This is calling *TGMM.exe <TGMMconfig.txt> \<firstTime> \<lastTime>*.  
 Takes `.bin` files, outputs tracking data as `.xml` files.  
 The XML contains the coordinates of the Gaussian which were fitted on the nuclei, from the supervoxel segmentation.    
 The XML files can be loaded in Fiji using MaMut to view the nuclei rendered from the gaussian fits and their tracks.  
 
-- __Display of localized nuclei__  
+### __Display of localized nuclei__  
 Takes `.xml` files, allows visualization of centroids overlaid on the original images.  
 The color of the centroid labeling is determined by the index of the cell lineage (ie cells from the same lineage have the same labeling color).  
 
