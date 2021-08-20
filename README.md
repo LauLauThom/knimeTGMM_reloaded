@@ -1,18 +1,18 @@
 # knimeTGMM_reloaded
 
-Knime workflow to automate the use of Tracking by Gaussian Mixture Model (TGMM) for 3D cell segmentation and cell-lineage tracking in 3D+time image-sequences.  
+Knime workflow to automate the use of the software Tracking by Gaussian Mixture Model (TGMM, Amat et al.) for 3D cell segmentation and cell-lineage tracking in 3D+time image-sequences.  
 TGMM was designed to work with dataset of cells with fluorescently labelled nuclei (ex: H2B-mCherry in developping drosophila embryos). 
 
 Results can be viewed either in Knime or displayed better using MaMut plugin in FIJI.
 
-The IDRdownloader python script in this repository can allow you to download additional datasets from the Image Data Resource database (https://idr.openmicroscopy.org/).  
+The IDRdownloader python script in this repository allows downloading additional datasets from the Image Data Resource database (https://idr.openmicroscopy.org/).  
 It is currently set to download an appropriate dataset from the Keller lab (source of the TGMM software) (https://idr.openmicroscopy.org/webclient/img_detail/4007801/?dataset=3351).
 
 # Requirements  
 TGMM requires a GPU with CUDA support.  
 This KNIME workflow is only compatible with TGMM for Windows, and was tested with Knime 4.4.0.  
 The Knime extensions (Image Processing and External Tools) needed by the workflow will be installed automatically by Knime upon opening the workflow.  
-It is recommended to set the logging level in KNIME to DEBUG to visualize the output of the TGMM exectuables called by the workflow directly ion the console output of KNIME.  
+It is recommended to set the logging level in KNIME to DEBUG to visualize the output of the TGMM exectuables called by the workflow directly in the console output of KNIME.  
 To do so, go to *Preferences > KNIME > KNIME GUI* and select *DEBUG*.  
 
 The original TGMM repository contains the necessary software to run this workflow (TGMM 1.0) as well as some documentation/user-guide and an example dataset under `data>data`.  
@@ -21,12 +21,25 @@ TGMM 1.0 is also available at https://git.rcc.uchicago.edu/open-source/TGMM but 
 TGMM 2.0 is also available but not compiled. 
 There is also some documentation in the doc directory of this repo https://bitbucket.org/fernandoamat/tgmm-paper/src/master/.  
 
+# Citations
+If you use this workflow for your research, please cite the original publication 
+
+Amat, F., Lemon, W., Mossing, D. P., McDole, K., Wan, Y., Branson, K., Myers, E. W. and Keller, P. J. (2014).  
+*Fast, accurate reconstruction of cell lineages from large-scale fluorescence microscopy data.*  
+Nature Methods 11, 951–958,  
+doi:10.1038/nmeth.3036.  
+
+as well as the DOI of this repository from Zenodo.  
+If you have a github account, you can also "star" the repo (icon on the top right) ;)
 
 # Expected datasets
 
-We recommend to use 3D datasets of at least 10 frames. Errors were observed using shorter datasets.  
-Z-stack for each timepoints have to be saved in separate `.tif` files.  
-Additionally, the filename should contain the timepoint, and filenames shoud be identical (except the timepoint) between the images. 
+We recommend to use 3D dataset (also 2D is supposed to work for some values of connectivity) and to process at least 10 timepoints.  
+Errors were observed using less timepoints.  
+
+Z-stack for each timepoints have to be saved in separate `.tif` files (single "f" not sure if "tiff" double-f are working, TGMM is matching image filenames against a wildcard pattern and by appending the tif extension).  
+
+Additionally, the filenames should contain the timepoint, and filenames shoud be identical (except the timepoint) between the images. 
 The reason is that the image location is provided to the workflow (ad to TGMM), as a wildcard pattern for the filepath, with ??? in-place of the timepoints, and no extension.  
 Example to match the following images: 
 ```
