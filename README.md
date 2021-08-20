@@ -58,9 +58,10 @@ By selecting a Tau, the hierarchical segmentation is "cut" to a given level, yie
 Note: ProcessStack can also be called to generate such bin file for single timepoints Z-stacks by calling  
 `ProcessStack.exe <image> <radiusMedianFilter> <minTau> <backgroundThr> <conn3D>`
 
-### __Visualization of the segmentation for a given Tau__  
+### __Visualization of the segmentation for a given Tau (optional)__  
 This is calling `ProcessStack.exe <binFile> <Tau> <minSuperVoxelSize>`.  
 This allows to visualize the resulting segmentation for a given Tau and minimum nuclei size (also called supervoxel size).  
+It is basically a way to optimize Tau before running the tracking (which is also asking for Tau).  
 It takes the `.bin` files generated at the previous step, and outputs segmentation mask as `.tif` files in the image directory.     
 The masks are then loaded in Knime and can be viewed overlaid on the original images.   
 From the original publication "The higher the value of Tau, the coarser the segmentation, as more image regions are merged."  
@@ -68,7 +69,7 @@ From the original publication "The higher the value of Tau, the coarser the segm
 ### __Tracking of cells__  
 This is calling `TGMM.exe <TGMMconfig.txt> <firstTime> <lastTime>`.  
 It performs the following steps:
-- from the `.bin` files containing the hierarchical segmentation, derive a segmentation corresponding to the selected Tau
+- from the `.bin` files containing the hierarchical segmentation, derive a segmentation corresponding to the selected Tau (what is done in the optional step above)
 - remove supervoxels below `minNucleiSize` 
 - apply Otsu thresholding followed by filtering with `maxNucleiSize` 
 - Fit gaussians on the supervoxels/nuclei (the Gaussian Mixture Model)
