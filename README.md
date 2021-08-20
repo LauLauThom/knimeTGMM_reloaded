@@ -11,7 +11,9 @@ It is currently set to download an appropriate dataset from the Keller lab (sour
 # Requirements  
 TGMM requires a GPU with CUDA support.  
 This KNIME workflow is only compatible with TGMM for Windows, and was tested with Knime 4.4.0.  
-The Knime extensions (Image Processing and External Tools) needed by the workflow will be installed automatically by Knime upon opening the workflow.
+The Knime extensions (Image Processing and External Tools) needed by the workflow will be installed automatically by Knime upon opening the workflow.  
+It is recommended to set the logging level in KNIME to DEBUG to visualize the output of the TGMM exectuables called by the workflow directly ion the console output of KNIME.  
+To do so, go to *Preferences > KNIME > KNIME GUI* and select *DEBUG*.  
 
 The original TGMM repository contains the necessary software to run this workflow (TGMM 1.0) as well as some documentation/user-guide and an example dataset under `data>data`.  
 You can find it at: https://sourceforge.net/projects/tgmm/files/.  
