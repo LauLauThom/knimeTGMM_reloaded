@@ -32,7 +32,7 @@ Amat, F., Lemon, W., Mossing, D. P., McDole, K., Wan, Y., Branson, K., Myers, E.
 Nature Methods 11, 951–958,  
 doi:10.1038/nmeth.3036.  
 
-as well as the DOI of this repository from Zenodo.  
+as well as the DOI of this repository from Zenodo (see at the top of this page).  
 If you have a github account, you can also "star" the repo (icon on the top right) ;)
 
 # Expected datasets
