@@ -30,7 +30,7 @@ If you use this workflow for your research, please cite the original publication
 Amat, F., Lemon, W., Mossing, D. P., McDole, K., Wan, Y., Branson, K., Myers, E. W. and Keller, P. J. (2014).  
 *Fast, accurate reconstruction of cell lineages from large-scale fluorescence microscopy data.*  
 Nature Methods 11, 951–958,  
-doi:10.1038/nmeth.3036.  
+doi:10.1038/nmeth.3036  
 
 as well as the DOI of this repository from Zenodo (see at the top of this page).  
 If you have a github account, you can also "star" the repo (icon on the top right) ;)
