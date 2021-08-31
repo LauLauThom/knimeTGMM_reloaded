@@ -1,3 +1,5 @@
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5226948.svg)](https://doi.org/10.5281/zenodo.5226948)
+
 # TGMM in KNIME
 
 Knime workflow to automate the use of the software Tracking by Gaussian Mixture Models (TGMM, Amat et al.) for 3D cell segmentation and cell-lineage tracking in 3D+time image-sequences.  
@@ -12,6 +14,7 @@ It is currently set to download an appropriate dataset from the Keller lab (sour
 TGMM requires a GPU with CUDA support.  
 This KNIME workflow is only compatible with TGMM for Windows, and was tested with Knime 4.4.0.  
 The Knime extensions (Image Processing and External Tools) needed by the workflow will be installed automatically by Knime upon opening the workflow.  
+
 It is recommended to set the logging level in KNIME to DEBUG to visualize the output of the TGMM exectuables called by the workflow directly in the console output of KNIME.  
 To do so, go to *Preferences > KNIME > KNIME GUI* and select *DEBUG*.  
 
